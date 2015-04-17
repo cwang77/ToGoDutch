@@ -5,4 +5,15 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="TableCellHighlight">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/cell_background_highlight</item>
+        <item name="android:layout_width">fill_parent</item>
+    </style>
+    <style name="TableCellMatte">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/cell_background_matte</item>
+        <item name="android:layout_width">fill_parent</item>
+    </style>
+
 </resources>

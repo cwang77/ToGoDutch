@@ -4,5 +4,5 @@
     <string name="table_title_people">People</string>
     <string name="table_edit_hint_name">Name</string>
     <string name="table_edit_hint_purchase">Purchase</string>
-    <string name="table_edit_hint_payment">Payment</string>
+    <string name="table_edit_hint_payment">$</string>
 </resources>

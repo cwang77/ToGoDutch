@@ -1,0 +1,9 @@
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditText
+        android:layout_column="1"
+        android:hint="@string/table_edit_hint_name"
+        android:layout_height="@dimen/table_cell_height"
+        android:layout_gravity="center_vertical"
+        style="@style/TableCellHighlight" />
+    <include layout="@layout/checkbox_highlight" />
+</TableRow>

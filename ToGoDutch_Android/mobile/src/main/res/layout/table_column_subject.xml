@@ -1,0 +1,14 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="@dimen/table_column_width"
+    android:orientation="vertical">
+    <EditText
+        android:hint="@string/table_edit_hint_purchase"
+        android:layout_height="@dimen/table_cell_height"
+        style="@style/TableCellMatte"/>
+    <EditText
+        android:hint="@string/table_edit_hint_payment"
+        style="@style/TableCellMatte"
+        android:layout_height="@dimen/table_cell_height"
+        android:inputType="numberSigned|numberDecimal"/>
+</LinearLayout>
