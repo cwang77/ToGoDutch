@@ -3,6 +3,8 @@
     <string name="action_settings">Settings</string>
     <string name="table_title_people">People</string>
     <string name="table_edit_hint_name">Name</string>
-    <string name="table_edit_hint_purchase">Purchase</string>
+    <string name="table_edit_hint_purchase">purchase</string>
     <string name="table_edit_hint_payment">$</string>
+    <string name="row_plus_btn_txt">R+</string>
+    <string name="col_plus_btn_txt">C+</string>
 </resources>
