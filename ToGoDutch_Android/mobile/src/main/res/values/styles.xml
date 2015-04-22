@@ -1,19 +1,15 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.DeviceDefault">
         <!-- Customize your theme here. -->
     </style>
 
     <style name="TableCellHighlight">
-        <item name="android:gravity">center</item>
         <item name="android:background">@drawable/cell_background_highlight</item>
-        <item name="android:layout_width">@dimen/table_column_width</item>
     </style>
     <style name="TableCellMatte">
-        <item name="android:gravity">center</item>
         <item name="android:background">@drawable/cell_background_matte</item>
-        <item name="android:layout_width">@dimen/table_column_width</item>
     </style>
 
 </resources>

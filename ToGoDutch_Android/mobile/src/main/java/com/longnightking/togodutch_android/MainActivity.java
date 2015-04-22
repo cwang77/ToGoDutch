@@ -5,9 +5,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
+import android.widget.TableRow;
+import android.widget.Toast;
+
+import com.longnightking.togodutch_android.interfaces.OnScrollListener;
+import com.longnightking.togodutch_android.widgets.ObservableHorizontalScrollView;
+import com.longnightking.togodutch_android.widgets.ObservableScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +30,17 @@ public class MainActivity extends Activity {
 
     private Button rowPlusBtn, colPlusBtn;
 
-    private ViewGroup statsTable, firstRow, secondRow;
+    private ViewGroup checkBoxesContainer, horizontalHeader, verticalHeader, tableContainer;
+
+    private ObservableHorizontalScrollView mHorizontalScrollView, horizontalHeaderContainer;
+
+    private ObservableScrollView mVerticalScrollView, verticalHeaderContainer;
 
     private List<ViewGroup> tableRows;
 
-    private Boolean rowColorFlag = false, colColorFlag = false;
+    private Boolean colorFlag = false;
 
-    private int rowNum = 2, colNum = 2;
+    private int rowNum = 1, colNum = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +52,13 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -58,55 +72,80 @@ public class MainActivity extends Activity {
     private void bindViews(){
         rowPlusBtn = (Button)findViewById(R.id.row_plus_btn);
         colPlusBtn = (Button)findViewById(R.id.col_plus_btn);
-        statsTable = (ViewGroup)findViewById(R.id.stats_table);
-        firstRow = (ViewGroup)findViewById(R.id.table_1st_row);
-        secondRow = (ViewGroup)findViewById(R.id.table_2nd_row);
+        checkBoxesContainer = (ViewGroup)findViewById(R.id.checkBoxesContainer);
+        horizontalHeader = (ViewGroup)findViewById(R.id.horizontalHeader);
+        verticalHeader = (ViewGroup)findViewById(R.id.verticalHeader);
+        tableContainer = (ViewGroup)findViewById(R.id.tableContainer);
+        mHorizontalScrollView = (ObservableHorizontalScrollView)findViewById(R.id.horizontalScrollBar);
+        mVerticalScrollView = (ObservableScrollView)findViewById(R.id.verticalScrollBar);
+        verticalHeaderContainer = (ObservableScrollView)findViewById(R.id.verticalHeaderContainer);
+        horizontalHeaderContainer = (ObservableHorizontalScrollView)findViewById(R.id.horizontalHeaderContainer);
+        TableRow firstRow = new TableRow(this);
+        ViewGroup checkBoxInFirstRow = (ViewGroup) LayoutInflater.from(this).inflate(
+                R.layout.checkbox_highlight, firstRow, false);
+        firstRow.addView(checkBoxInFirstRow);
+        checkBoxesContainer.addView(firstRow);
+
         tableRows = new ArrayList<ViewGroup>();
+        bindCheckBox(checkBoxInFirstRow, 0);
         rowPlusBtn.setOnClickListener(mButtonClickListener);
         colPlusBtn.setOnClickListener(mButtonClickListener);
+        mHorizontalScrollView.setScrollViewListener(mOnScrollListener);
+        mVerticalScrollView.setScrollViewListener(mOnScrollListener);
+        verticalHeaderContainer.setOnTouchListener(mTableHeaderOnTouchDoNothingListener);
+        horizontalHeaderContainer.setOnTouchListener(mTableHeaderOnTouchDoNothingListener);
+        tableRows.add(firstRow);
     }
 
     private void addRow(){
-        int rowViewId = R.layout.table_row_subject_matte;
+        int headViewId = R.layout.table_row_subject_matte;
         int cellViewId = R.layout.checkbox_matte;
-        colColorFlag = rowColorFlag;
-        if(rowColorFlag)
-            rowViewId = R.layout.table_row_subject_highlight;
-        if(colColorFlag)
+        if(colorFlag) {
             cellViewId = R.layout.checkbox_highlight;
-        ViewGroup rowView = (ViewGroup) LayoutInflater.from(this).inflate(
-                rowViewId, statsTable, false);
-        for(int i = 2; i < colNum; i++)
+            headViewId = R.layout.table_row_subject_highlight;
+        }
+        EditText headerView = (EditText) LayoutInflater.from(this).inflate(
+                headViewId, verticalHeader, false);
+        TableRow rowView = new TableRow(this);
+        for(int i = 0; i < colNum; i++)
         {
             ViewGroup cellView = (ViewGroup) LayoutInflater.from(this).inflate(
                     cellViewId, rowView, false);
             rowView.addView(cellView, i);
+            bindCheckBox(cellView, rowNum * 10 + i);
+
         }
-        statsTable.addView(rowView, rowNum);
+        verticalHeader.addView(headerView, rowNum);
+        checkBoxesContainer.addView(rowView, rowNum);
         tableRows.add(rowView);
-        rowColorFlag = !rowColorFlag;
-        colColorFlag = rowColorFlag;
+        colorFlag = !colorFlag;
         rowNum++;
     }
 
     private void addColumn(){
-        ViewGroup firstColView = (ViewGroup) LayoutInflater.from(this).inflate(
-                R.layout.table_column_subject, firstRow, false);
-        firstRow.addView(firstColView, colNum);
-        ViewGroup secondColView = (ViewGroup) LayoutInflater.from(this).inflate(
-                R.layout.checkbox_highlight, secondRow, false);
-        secondRow.addView(secondColView, colNum);
-        colColorFlag = false;
-        for(int i = 2; i < rowNum; i++){
+        ViewGroup headerView = (ViewGroup) LayoutInflater.from(this).inflate(
+                R.layout.table_column_subject, horizontalHeader, false);
+        horizontalHeader.addView(headerView, colNum);
+        colorFlag = true;
+        for(int i = 0; i < rowNum; i++){
             int cellViewId = R.layout.checkbox_matte;
-            if(colColorFlag)
+            if(colorFlag)
                 cellViewId = R.layout.checkbox_highlight;
             ViewGroup cellView = (ViewGroup) LayoutInflater.from(this).inflate(
-                    cellViewId, tableRows.get(i - 2), false);
-            tableRows.get(i - 2).addView(cellView, colNum);
-            colColorFlag = !colColorFlag;
+                    cellViewId, tableRows.get(i), false);
+            tableRows.get(i).addView(cellView, colNum);
+            bindCheckBox(cellView, i * 10 + colNum);
+            colorFlag = !colorFlag;
         }
         colNum++;
+    }
+
+    private CompoundButton bindCheckBox(ViewGroup parentView, int id)
+    {
+        CheckBox mCheckBox = (CheckBox)parentView.findViewById(R.id.checkBox);
+        mCheckBox.setOnCheckedChangeListener(mCheckBoxChangeListener);
+        mCheckBox.setId(id);
+        return mCheckBox;
     }
 
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
@@ -121,6 +160,47 @@ public class MainActivity extends Activity {
                     break;
                 default: break;
             }
+        }
+    };
+
+    private CheckBox.OnCheckedChangeListener mCheckBoxChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            int mId = buttonView.getId();
+            if(mId >= 0){
+                int mRow = mId / 10;
+                int mCol = mId % 10;
+                String checkedTxt = "";
+                if(isChecked)
+                    checkedTxt = "true";
+                else
+                    checkedTxt = "false";
+                Toast.makeText(MainActivity.this, "Checked: " + checkedTxt + ", Row: " + mRow + ", Col: " + mCol, Toast.LENGTH_SHORT).show();
+            }
+            else
+                Toast.makeText(MainActivity.this, "checkbox not exist, mId: " + mId, Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private OnScrollListener mOnScrollListener = new OnScrollListener(){
+        @Override
+        public void onScrollStateChanged(FrameLayout mScrollView, int x, int y, int oldX, int oldY){
+            if(mScrollView.getId() == R.id.horizontalScrollBar){
+                horizontalHeaderContainer.scrollTo(x, y);
+            }else if(mScrollView.getId() == R.id.verticalScrollBar){
+                verticalHeaderContainer.scrollTo(x, y);
+            }else if(mScrollView.getId() == R.id.verticalHeaderContainer){
+                mHorizontalScrollView.scrollTo(x, y);
+            }else if (mScrollView.getId() == R.id.horizontalHeaderContainer){
+                mVerticalScrollView.scrollTo(x, y);
+            }
+        }
+    };
+
+    private View.OnTouchListener mTableHeaderOnTouchDoNothingListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            return true;
         }
     };
 }
