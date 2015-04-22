@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true">
+
+    <FrameLayout
+        android:id="@+id/topLeftCornerContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
+
+
+    <com.longnightking.togodutch_android.widgets.ObservableScrollView
+        android:id="@+id/verticalHeaderContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topLeftCornerContainer">
+        <LinearLayout
+            android:id="@+id/verticalHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </com.longnightking.togodutch_android.widgets.ObservableScrollView>
+
+
+    <com.longnightking.togodutch_android.widgets.ObservableHorizontalScrollView
+        android:id="@+id/horizontalHeaderContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/topLeftCornerContainer">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/horizontalHeader">
+
+        </LinearLayout>
+    </com.longnightking.togodutch_android.widgets.ObservableHorizontalScrollView>
+
+    <com.longnightking.togodutch_android.widgets.ObservableScrollView
+        android:id="@+id/verticalScrollBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/verticalHeaderContainer"
+        android:layout_below="@+id/horizontalHeaderContainer">
+
+        <com.longnightking.togodutch_android.widgets.ObservableHorizontalScrollView
+            android:id="@+id/horizontalScrollBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <TableLayout
+                android:id="@+id/checkBoxesContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TableLayout>
+        </com.longnightking.togodutch_android.widgets.ObservableHorizontalScrollView>
+
+    </com.longnightking.togodutch_android.widgets.ObservableScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,7 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/verticalHeaderTitle"
+    android:layout_height="@dimen/table_cell_height_double"
+    android:text="@string/table_title_people"
+    android:layout_width="@dimen/table_column_width"
+    android:gravity="center"
+    style="@style/TableCellMatte"/>
