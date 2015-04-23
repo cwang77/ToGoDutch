@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -17,6 +16,8 @@ import android.widget.Toast;
 
 import com.longnightking.togodutch_android.R;
 import com.longnightking.togodutch_android.interfaces.OnScrollListener;
+import com.longnightking.togodutch_android.statistic.Contact;
+import com.longnightking.togodutch_android.statistic.Purchase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,23 +43,26 @@ public class TableView extends RelativeLayout {
 
     private Boolean colorFlag = false;
 
-    public TableView(Context context, TableInitResIds Ids, int rNum, int cNum){
+    private CheckBox.OnCheckedChangeListener onCheckedChangeListener;
+
+    public TableView(Context context, TableInitResIds Ids, int rNum, int cNum, CheckBox.OnCheckedChangeListener listener){
         super(context);
-        init(context, Ids, rNum, cNum);
+        init(context, Ids, rNum, cNum, listener);
     }
 
-    public TableView(Context context, AttributeSet attrs, TableInitResIds Ids, int rNum, int cNum){
+    public TableView(Context context, AttributeSet attrs, TableInitResIds Ids, int rNum, int cNum, CheckBox.OnCheckedChangeListener listener){
         super(context, attrs);
-        init(context, Ids, rNum, cNum);
+        init(context, Ids, rNum, cNum, listener);
     }
-    public TableView(Context context, AttributeSet attrs, int defStyleAttr, TableInitResIds Ids, int rNum, int cNum){
+    public TableView(Context context, AttributeSet attrs, int defStyleAttr, TableInitResIds Ids, int rNum, int cNum, CheckBox.OnCheckedChangeListener listener){
         super(context, attrs, defStyleAttr);
-        init(context, Ids, rNum, cNum);
+        init(context, Ids, rNum, cNum, listener);
     }
 
-    private void init(Context context, TableInitResIds Ids, int r, int c){
+    private void init(Context context, TableInitResIds Ids, int r, int c, CheckBox.OnCheckedChangeListener listener){
         mContext = context;
         resIds = Ids;
+        onCheckedChangeListener = listener;
         inflate(mContext, R.layout.widget_tableview, this);
         bindViews(r, c);
     }
@@ -146,32 +150,47 @@ public class TableView extends RelativeLayout {
         colNum++;
     }
 
+    public boolean getStatsDataFromUI(List<Contact> contactList, List<Purchase> purchaseList){
+        contactList.clear();
+        purchaseList.clear();
+        for(int i = 0; i < rowNum; i++){
+            EditText contactView = (EditText)verticalHeader.getChildAt(i);
+            String contactName = contactView.getText().toString();
+            if(contactName.isEmpty()){
+                Toast.makeText(mContext, "Name on row NO." + (i + 1) + "is empty.", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            else
+            {
+                Contact contact = new Contact(contactName);
+                contactList.add(contact);
+            }
+        }
+
+        for(int i = 0; i < colNum; i++){
+            EditText purchaseTitleView = (EditText)((ViewGroup)horizontalHeader.getChildAt(i)).getChildAt(0);
+            EditText purchaseConsumptionView = (EditText)((ViewGroup)horizontalHeader.getChildAt(i)).getChildAt(1);
+            String title = purchaseTitleView.getText().toString();
+            String consumptionTxt = purchaseConsumptionView.getText().toString();
+            if(title.isEmpty() || consumptionTxt.isEmpty())
+            {
+                Toast.makeText(mContext, "Purchase on Column NO." + (i + 1) + "is empty.", Toast.LENGTH_SHORT).show();
+                return false;
+            }else{
+                Purchase purchase = new Purchase(title, Double.parseDouble(consumptionTxt));
+                purchaseList.add(purchase);
+            }
+        }
+        return true;
+    }
+
     private CompoundButton bindCheckBox(ViewGroup parentView, int id)
     {
         CheckBox mCheckBox = (CheckBox)parentView.findViewById(R.id.checkBox);
-        mCheckBox.setOnCheckedChangeListener(mCheckBoxChangeListener);
+        mCheckBox.setOnCheckedChangeListener(onCheckedChangeListener);
         mCheckBox.setId(id);
         return mCheckBox;
     }
-
-    private CheckBox.OnCheckedChangeListener mCheckBoxChangeListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            int mId = buttonView.getId();
-            if(mId >= 0){
-                int mRow = mId / 10;
-                int mCol = mId % 10;
-                String checkedTxt = "";
-                if(isChecked)
-                    checkedTxt = "true";
-                else
-                    checkedTxt = "false";
-                Toast.makeText(mContext, "Checked: " + checkedTxt + ", Row: " + mRow + ", Col: " + mCol, Toast.LENGTH_SHORT).show();
-            }
-            else
-                Toast.makeText(mContext, "checkbox not exist, mId: " + mId, Toast.LENGTH_SHORT).show();
-        }
-    };
 
     private OnScrollListener mOnScrollListener = new OnScrollListener(){
         @Override

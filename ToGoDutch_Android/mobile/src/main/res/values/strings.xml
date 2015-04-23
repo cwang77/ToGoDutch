@@ -7,4 +7,5 @@
     <string name="table_edit_hint_payment">$</string>
     <string name="row_plus_btn_txt">R+</string>
     <string name="col_plus_btn_txt">C+</string>
+    <string name="calculation_btn_txt">=</string>
 </resources>

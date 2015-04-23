@@ -25,8 +25,21 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="@string/col_plus_btn_txt"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_toEndOf="@+id/row_plus_btn">
     </Button>
+
+    <Button
+        android:id="@+id/calculate_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/calculation_btn_txt"
+        android:layout_toEndOf="@+id/col_plus_btn">
+    </Button>
+
+    <TextView
+        android:id="@+id/calculateResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>
