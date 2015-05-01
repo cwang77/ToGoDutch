@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.longnightking.togodutch_android.ui.StatisticActivity">
+
+    <FrameLayout
+        android:id="@+id/tableContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/row_plus_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/row_plus_btn_txt">
+    </Button>
+
+    <Button
+        android:id="@+id/col_plus_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/col_plus_btn_txt"
+        android:layout_toEndOf="@+id/row_plus_btn">
+    </Button>
+
+    <Button
+        android:id="@+id/calculate_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/calculation_btn_txt"
+        android:layout_toEndOf="@+id/col_plus_btn">
+    </Button>
+
+    <TextView
+        android:id="@+id/calculateResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>
