@@ -1,5 +1,6 @@
 package com.longnightking.togodutch_android.widgets;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -85,6 +86,7 @@ public class TableView extends RelativeLayout {
         horizontalHeader.addView(LayoutInflater.from(mContext).inflate(
                 resIds.mHHeaderUnitResId, horizontalHeader, false));
         TableRow firstRow = new TableRow(mContext);
+        firstRow.setLayoutTransition(new LayoutTransition());
         ViewGroup checkBoxInFirstRow = (ViewGroup) LayoutInflater.from(mContext).inflate(
                 resIds.mTableCellResId_H, firstRow, false);
         firstRow.addView(checkBoxInFirstRow);
@@ -118,6 +120,7 @@ public class TableView extends RelativeLayout {
         View headerView = LayoutInflater.from(mContext).inflate(
                 headViewId, verticalHeader, false);
         TableRow rowView = new TableRow(mContext);
+        rowView.setLayoutTransition(new LayoutTransition());
         for(int i = 0; i < colNum; i++)
         {
             ViewGroup cellView = (ViewGroup) LayoutInflater.from(mContext).inflate(

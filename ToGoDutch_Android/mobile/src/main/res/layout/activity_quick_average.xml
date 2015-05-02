@@ -7,6 +7,7 @@
     tools:context="com.longnightking.togodutch_android.ui.QuickAverageActivity">
 
     <TextView android:text="@string/title_activity_quick_average" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/textView" />
 
 </RelativeLayout>

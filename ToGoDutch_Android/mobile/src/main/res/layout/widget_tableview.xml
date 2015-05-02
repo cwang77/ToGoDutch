@@ -20,7 +20,8 @@
             android:id="@+id/verticalHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true">
 
         </LinearLayout>
     </com.longnightking.togodutch_android.widgets.ObservableScrollView>
@@ -35,7 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/horizontalHeader">
+            android:id="@+id/horizontalHeader"
+            android:animateLayoutChanges="true">
 
         </LinearLayout>
     </com.longnightking.togodutch_android.widgets.ObservableHorizontalScrollView>
@@ -56,7 +58,8 @@
             <TableLayout
                 android:id="@+id/checkBoxesContainer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true">
 
             </TableLayout>
         </com.longnightking.togodutch_android.widgets.ObservableHorizontalScrollView>
