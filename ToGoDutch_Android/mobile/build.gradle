@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.longnightking.togodutch_android"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -24,4 +24,6 @@ dependencies {
     wearApp project(':wear')
     compile 'com.google.android.gms:play-services:7.0.0'
     compile 'com.android.support:appcompat-v7:22.0.0'
+    compile files('libs/libammsdk.jar')
+    compile 'com.facebook.android:facebook-android-sdk:4.1.0'
 }

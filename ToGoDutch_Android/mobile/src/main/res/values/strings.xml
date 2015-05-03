@@ -1,18 +1,11 @@
 <resources>
     <string name="app_name">ToGoDutch</string>
-    <string name="action_settings">Settings</string>
-    <string name="table_title_people">People</string>
-    <string name="table_edit_hint_name">Name</string>
-    <string name="table_edit_hint_purchase">purchase</string>
-    <string name="table_edit_hint_payment">$</string>
-    <string name="row_plus_btn_txt">R+</string>
-    <string name="col_plus_btn_txt">C+</string>
-    <string name="calculation_btn_txt">=</string>
-
+    <string name="app_name_in_txt">To Go Dutch</string>
     <string name="title_activity_login">Sign in</string>
 
-
     <!-- Strings related to login -->
+
+    <string name="facebook_app_id">1589700857935790</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -24,6 +17,17 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="title_activity_statistic">StatisticActivity</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="table_title_people">People</string>
+    <string name="table_edit_hint_name">Name</string>
+    <string name="table_edit_hint_purchase">purchase</string>
+    <string name="table_edit_hint_payment">$</string>
+    <string name="row_plus_btn_txt">R+</string>
+    <string name="col_plus_btn_txt">C+</string>
+    <string name="calculation_btn_txt">=</string>
+
+
 
     <!-- Strings related to main activity -->
     <string name="nav_btn_txt_new_statistic">New</string>
@@ -37,4 +41,5 @@
     <string name="title_activity_add_my_purchase">AddMyPurchaseActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>
