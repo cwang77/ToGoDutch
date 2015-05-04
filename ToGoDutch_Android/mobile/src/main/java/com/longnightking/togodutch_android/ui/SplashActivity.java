@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.longnightking.togodutch_android.MainActivity;
 import com.longnightking.togodutch_android.R;
@@ -22,7 +23,7 @@ public class SplashActivity extends Activity {
         new LoginRequireCheck().execute();
     }
 
-    private class LoginRequireCheck extends AsyncTask<Void, Void, Void> {
+    private class LoginRequireCheck extends AsyncTask<Void, Void, Intent> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -30,23 +31,26 @@ public class SplashActivity extends Activity {
         }
 
         @Override
-        protected Void doInBackground(Void... arg0) {
-
-            return null;
+        protected Intent doInBackground(Void... arg0) {
+            //check facebook access token
+            FacebookSdk.sdkInitialize(getApplicationContext());
+            if(AccessToken.getCurrentAccessToken() != null)
+                return new Intent(SplashActivity.this, MainActivity.class);
+            else
+                return new Intent(SplashActivity.this, LoginActivity.class);
         }
 
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(final Intent result) {
             super.onPostExecute(result);
             new Handler().postDelayed(new Runnable() {
 
                 @Override
                 public void run() {
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                    startActivity(result);
                     finish();
                 }
-            }, 3000);
+            }, 1000);
         }
     }
 

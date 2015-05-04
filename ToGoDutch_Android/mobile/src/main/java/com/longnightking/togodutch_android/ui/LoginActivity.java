@@ -32,9 +32,6 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-        if(AccessToken.getCurrentAccessToken() != null) {
-            refirectToMainActivity();
-        }
         setContentView(R.layout.activity_login);
         bindViews();
     }
@@ -55,24 +52,6 @@ public class LoginActivity extends Activity {
         super.onPause();
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -81,7 +60,6 @@ public class LoginActivity extends Activity {
 
     private void init(){
         //init facebookSDK
-        FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         accessTokenTracker = new AccessTokenTracker() {
             @Override
@@ -89,7 +67,9 @@ public class LoginActivity extends Activity {
                     AccessToken oldAccessToken,
                     AccessToken currentAccessToken) {
                 if(currentAccessToken != null)
-                    refirectToMainActivity();
+                    reDirectToMainActivity();
+                else
+                    Toast.makeText(LoginActivity.this, "current null", Toast.LENGTH_SHORT).show();
             }
         };
     }
@@ -118,7 +98,7 @@ public class LoginActivity extends Activity {
         });
     }
 
-    private void refirectToMainActivity(){
+    private void reDirectToMainActivity(){
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

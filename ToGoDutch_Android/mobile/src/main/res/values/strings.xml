@@ -1,21 +1,18 @@
 <resources>
     <string name="app_name">ToGoDutch</string>
     <string name="app_name_in_txt">To Go Dutch</string>
-    <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
-
+    <string name="title_activity_login">Sign in</string>
     <string name="facebook_app_id">1589700857935790</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="plus_sign_out">Switch Google+ account</string>
-    <string name="plus_disconnect">Disconnect from Google+</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
+
+    <!-- Strings related to main activity -->
+    <string name="title_activity_main">Dashboard</string>
+
     <string name="title_activity_statistic">StatisticActivity</string>
 
     <string name="action_settings">Settings</string>
