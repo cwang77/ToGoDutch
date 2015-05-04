@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#0489b1</color>
     <color name="colorAccent">#0080ff</color>
     <color name="windowBackgroundForSignIn">#04243b</color>
+
+    <color name="dashboard_nav_item_new_bg_color">#66ee0000</color>
+    <color name="dashboard_nav_item_history_bg_color">#6600ee00</color>
+    <color name="dashboard_nav_item_unfinished_bg_color">#660000ee</color>
+    <color name="dashboard_nav_item_quick_avg_bg_color">#66eeee00</color>
 </resources>

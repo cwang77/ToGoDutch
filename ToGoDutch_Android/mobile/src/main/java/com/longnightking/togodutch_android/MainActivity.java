@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -15,9 +17,21 @@ import com.longnightking.togodutch_android.ui.QuickAverageActivity;
 import com.longnightking.togodutch_android.ui.StatisticActivity;
 import com.longnightking.togodutch_android.ui.UnfinishedWorkActivity;
 
+import java.lang.reflect.Array;
+
 public class MainActivity extends Activity {
 
-    private Button navBtnNew, navBtnHistory, navBtnUnfinished, navBtnQuickAverage;
+    private static final int menuItemsNum = 4;
+
+    private View[] navMenuViews;
+
+    private ImageView[] navMenuIcons;
+
+    private TextView[] navMenuTexts;
+
+    private static final int[] viewIds = {R.id.nav_item_new_statistic, R.id.nav_item_history, R.id.nav_item_unfinished_work, R.id.nav_item_quick_average};
+
+    private static final int[] viewBgColorCodes = {R.color.dashboard_nav_item_new_bg_color, R.color.dashboard_nav_item_history_bg_color, R.color.dashboard_nav_item_unfinished_bg_color, R.color.dashboard_nav_item_quick_avg_bg_color};
 
     public static final String TAG = MainActivity.class.getName();
 
@@ -63,40 +77,37 @@ public class MainActivity extends Activity {
     }
 
     private void bindViews(){
-        navBtnNew = (Button)findViewById(R.id.nav_btn_new_statistic);
-        navBtnHistory = (Button)findViewById(R.id.nav_btn_history);
-        navBtnUnfinished = (Button)findViewById(R.id.nav_btn_unfinished_work);
-        navBtnQuickAverage = (Button)findViewById(R.id.nav_btn_quick_average);
-        navBtnNew.setOnClickListener(mButtonClickListener);
-        navBtnHistory.setOnClickListener(mButtonClickListener);
-        navBtnUnfinished.setOnClickListener(mButtonClickListener);
-        navBtnQuickAverage.setOnClickListener(mButtonClickListener);
+        navMenuViews = new View[menuItemsNum];
+        navMenuIcons = new ImageView[menuItemsNum];
+        navMenuTexts = new TextView[menuItemsNum];
+
+        for(int i = 0; i < menuItemsNum; i++){
+            navMenuViews[i] = findViewById(viewIds[i]);
+            navMenuViews[i].setBackgroundColor(getResources().getColor(viewBgColorCodes[i]));
+            navMenuIcons[i] = (ImageView)navMenuViews[i].findViewById(R.id.menu_item_icon);
+            navMenuTexts[i] = (TextView)navMenuViews[i].findViewById(R.id.menu_item_txt);
+            navMenuViews[i].setOnClickListener(mButtonClickListener);
+        }
     }
 
     private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent;
-            switch(v.getId()){
-                case R.id.nav_btn_new_statistic:
-                    intent = new Intent(MainActivity.this, StatisticActivity.class);
-                    intent.putExtra(StatisticActivity.STATISTIC_TABLE_INIT_ROW_NUM, 1);
-                    intent.putExtra(StatisticActivity.STATISTIC_TABLE_INIT_COL_NUM, 1);
-                    startActivity(intent);
-                    break;
-                case R.id.nav_btn_history:
-                    intent = new Intent(MainActivity.this, DutchHistoryActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.nav_btn_unfinished_work:
-                    intent = new Intent(MainActivity.this, UnfinishedWorkActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.nav_btn_quick_average:
-                    intent = new Intent(MainActivity.this, QuickAverageActivity.class);
-                    startActivity(intent);
-                    break;
-                default: break;
+            if (v.getId() == viewIds[0]) {
+                intent = new Intent(MainActivity.this, StatisticActivity.class);
+                intent.putExtra(StatisticActivity.STATISTIC_TABLE_INIT_ROW_NUM, 1);
+                intent.putExtra(StatisticActivity.STATISTIC_TABLE_INIT_COL_NUM, 1);
+                startActivity(intent);
+            }else if (v.getId() == viewIds[1]) {
+                intent = new Intent(MainActivity.this, DutchHistoryActivity.class);
+                startActivity(intent);
+            }else if (v.getId() == viewIds[2]) {
+                intent = new Intent(MainActivity.this, UnfinishedWorkActivity.class);
+                startActivity(intent);
+            }else if (v.getId() == viewIds[3]) {
+                intent = new Intent(MainActivity.this, QuickAverageActivity.class);
+                startActivity(intent);
             }
         }
     };

@@ -8,6 +8,8 @@
 
     <dimen name="activity_logo_vertical_margin">30dp</dimen>
 
+    <dimen name="activity_main_dashboard_menu_item_txt_margin">15dp</dimen>
+
 
     <dimen name="table_column_width">90dp</dimen>
     <dimen name="table_cell_height_double">64dp</dimen>

@@ -12,6 +12,7 @@
 
     <!-- Strings related to main activity -->
     <string name="title_activity_main">Dashboard</string>
+    <string name="dashboard_menu_item_text">Menu Text</string>
 
     <string name="title_activity_statistic">StatisticActivity</string>
 
