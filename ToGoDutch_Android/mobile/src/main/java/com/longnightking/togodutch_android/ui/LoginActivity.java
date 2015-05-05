@@ -3,21 +3,16 @@ package com.longnightking.togodutch_android.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.util.Log;
+import android.view.View;
 
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.longnightking.togodutch_android.MainActivity;
 import com.longnightking.togodutch_android.R;
+import com.longnightking.togodutch_android.global.UserManagement;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseUser;
 
 /**
  * A login screen that offers login via email/password and via Facebook and wechat sign in.
@@ -25,13 +20,12 @@ import com.longnightking.togodutch_android.R;
  */
 public class LoginActivity extends Activity {
     private LoginButton faceBookLoginBtn;
-    private CallbackManager callbackManager;
-    private AccessTokenTracker accessTokenTracker;
+
+    public static final String TAG = LoginActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
         setContentView(R.layout.activity_login);
         bindViews();
     }
@@ -39,7 +33,6 @@ public class LoginActivity extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        accessTokenTracker.stopTracking();
     }
 
     @Override
@@ -55,45 +48,30 @@ public class LoginActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void init(){
-        //init facebookSDK
-        callbackManager = CallbackManager.Factory.create();
-        accessTokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(
-                    AccessToken oldAccessToken,
-                    AccessToken currentAccessToken) {
-                if(currentAccessToken != null)
-                    reDirectToMainActivity();
-                else
-                    Toast.makeText(LoginActivity.this, "current null", Toast.LENGTH_SHORT).show();
-            }
-        };
+        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
     }
 
     private void bindViews(){
         faceBookLoginBtn = (LoginButton)findViewById(R.id.fb_login_button);
-        faceBookLoginBtn.setReadPermissions("user_friends");
 
-        // Callback registration
-        faceBookLoginBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        faceBookLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(LoginActivity.this, "cancel", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                exception.printStackTrace();
+            public void onClick(View v) {
+                ParseFacebookUtils.logInWithReadPermissionsInBackground(LoginActivity.this, UserManagement.getInstance(LoginActivity.this).getPermissionsList(), new LogInCallback() {
+                    @Override
+                    public void done(ParseUser user, ParseException err) {
+                        if (user == null) {
+                            Log.d(TAG, "Uh oh. The user cancelled the Facebook login.");
+                        } else {
+                            if (user.isNew()) {
+                                Log.d(TAG, "User signed up and logged in through Facebook!");
+                            } else {
+                                Log.d(TAG, "User logged in through Facebook!");
+                            }
+                            reDirectToMainActivity();
+                        }
+                    }
+                });
             }
         });
     }

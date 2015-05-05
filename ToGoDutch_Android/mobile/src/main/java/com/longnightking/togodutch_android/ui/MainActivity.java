@@ -1,4 +1,4 @@
-package com.longnightking.togodutch_android;
+package com.longnightking.togodutch_android.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,18 +6,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.longnightking.togodutch_android.ui.DutchHistoryActivity;
-import com.longnightking.togodutch_android.ui.QuickAverageActivity;
-import com.longnightking.togodutch_android.ui.StatisticActivity;
-import com.longnightking.togodutch_android.ui.UnfinishedWorkActivity;
-
-import java.lang.reflect.Array;
+import com.longnightking.togodutch_android.R;
 
 public class MainActivity extends Activity {
 

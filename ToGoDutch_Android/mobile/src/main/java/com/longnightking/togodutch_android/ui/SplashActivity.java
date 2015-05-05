@@ -3,16 +3,16 @@ package com.longnightking.togodutch_android.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Handler;
+import android.util.Log;
 
-import com.facebook.AccessToken;
-import com.facebook.FacebookSdk;
-import com.longnightking.togodutch_android.MainActivity;
 import com.longnightking.togodutch_android.R;
+import com.longnightking.togodutch_android.global.UserManagement;
+import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class SplashActivity extends Activity {
 
@@ -23,34 +23,45 @@ public class SplashActivity extends Activity {
         new LoginRequireCheck().execute();
     }
 
-    private class LoginRequireCheck extends AsyncTask<Void, Void, Intent> {
+    private class LoginRequireCheck extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+            ParseFacebookUtils.initialize(SplashActivity.this);
         }
 
         @Override
-        protected Intent doInBackground(Void... arg0) {
-            //check facebook access token
-            FacebookSdk.sdkInitialize(getApplicationContext());
-            if(AccessToken.getCurrentAccessToken() != null)
-                return new Intent(SplashActivity.this, MainActivity.class);
-            else
-                return new Intent(SplashActivity.this, LoginActivity.class);
+        protected Void doInBackground(Void... arg0) {
+            final ParseUser currentUser = ParseUser.getCurrentUser();
+            if(currentUser != null && !ParseFacebookUtils.isLinked(currentUser))
+                ParseFacebookUtils.linkWithReadPermissionsInBackground(currentUser, SplashActivity.this, UserManagement.getInstance(SplashActivity.this).getPermissionsList(), new SaveCallback() {
+                    @Override
+                    public void done(ParseException ex) {
+                        if (ParseFacebookUtils.isLinked(currentUser)) {
+                            Log.d("SplashActivity", "Woohoo, user logged in with Facebook!");
+                        }
+                    }
+                });
+            return null;
         }
 
         @Override
-        protected void onPostExecute(final Intent result) {
+        protected void onPostExecute(final Void result) {
             super.onPostExecute(result);
+            final Intent intent;
+            if(ParseUser.getCurrentUser() == null)
+                intent = new Intent(SplashActivity.this, LoginActivity.class);
+            else
+                intent = new Intent(SplashActivity.this, MainActivity.class);
+
             new Handler().postDelayed(new Runnable() {
 
                 @Override
                 public void run() {
-                    startActivity(result);
+                    startActivity(intent);
                     finish();
                 }
-            }, 1000);
+            }, 500);
         }
     }
 
