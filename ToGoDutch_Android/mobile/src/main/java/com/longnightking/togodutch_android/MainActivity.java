@@ -80,13 +80,14 @@ public class MainActivity extends Activity {
         navMenuViews = new View[menuItemsNum];
         navMenuIcons = new ImageView[menuItemsNum];
         navMenuTexts = new TextView[menuItemsNum];
-
+        String[] navMenuTxtArray = getResources().getStringArray(R.array.nav_menu_array);
         for(int i = 0; i < menuItemsNum; i++){
             navMenuViews[i] = findViewById(viewIds[i]);
             navMenuViews[i].setBackgroundColor(getResources().getColor(viewBgColorCodes[i]));
             navMenuIcons[i] = (ImageView)navMenuViews[i].findViewById(R.id.menu_item_icon);
             navMenuTexts[i] = (TextView)navMenuViews[i].findViewById(R.id.menu_item_txt);
             navMenuViews[i].setOnClickListener(mButtonClickListener);
+            navMenuTexts[i].setText(navMenuTxtArray[i]);
         }
     }
 

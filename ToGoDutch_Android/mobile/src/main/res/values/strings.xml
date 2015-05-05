@@ -10,7 +10,7 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
 
-    <!-- Strings related to main activity -->
+    <!-- Strings related to statistic activity -->
     <string name="title_activity_main">Dashboard</string>
     <string name="dashboard_menu_item_text">Menu Text</string>
 
@@ -28,10 +28,12 @@
 
 
     <!-- Strings related to main activity -->
-    <string name="nav_btn_txt_new_statistic">New</string>
-    <string name="nav_btn_txt_history">History</string>
-    <string name="nav_btn_txt_unfinished_work">Unfinished Work</string>
-    <string name="nav_btn_txt_quick_average">Quick Average</string>
+    <string-array name="nav_menu_array">
+        <item>New</item>
+        <item>History</item>
+        <item>Unfinished Work</item>
+        <item>Quick Average</item>
+    </string-array>
 
     <string name="title_activity_dutch_history">DutchHistoryActivity</string>
     <string name="title_activity_unfinished_work">UnfinishedWorkActivity</string>
