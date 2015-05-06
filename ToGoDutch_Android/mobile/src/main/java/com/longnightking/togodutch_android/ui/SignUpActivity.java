@@ -1,5 +1,6 @@
 package com.longnightking.togodutch_android.ui;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 
 import com.longnightking.togodutch_android.R;
 
-public class SignUpActivity extends ActionBarActivity {
+public class SignUpActivity extends Activity {
 
     private EditText username, password, passwordRepeat;
 
