@@ -7,8 +7,12 @@
     <string name="facebook_app_id">1589700857935790</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="forgot_password_txt">Forgot password?</string>
+    <string name="sign_up_txt">New here? Sign up</string>
+    <string name="username">Name</string>
+    <string name="register_btn_txt">Register</string>
+    <string name="password_repeat">Repeat Password</string>
 
     <!-- Strings related to statistic activity -->
     <string name="title_activity_main">Dashboard</string>
@@ -42,4 +46,5 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
 </resources>

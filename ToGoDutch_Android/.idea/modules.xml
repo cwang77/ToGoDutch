@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FacebookSDK/FacebookSDK.iml" filepath="$PROJECT_DIR$/FacebookSDK/FacebookSDK.iml" />
-      <module fileurl="file://$PROJECT_DIR$/FacebookSDK/FacebookSDK.iml" filepath="$PROJECT_DIR$/FacebookSDK/FacebookSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/ToGoDutch_Android.iml" filepath="$PROJECT_DIR$/ToGoDutch_Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
       <module fileurl="file://$PROJECT_DIR$/mobile/mobile.iml" filepath="$PROJECT_DIR$/mobile/mobile.iml" />

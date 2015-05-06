@@ -3,10 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="login_btn_margin_vertical">50dp</dimen>
+    <dimen name="login_form_margin_vertical">25dp</dimen>
     <dimen name="login_account_info_margin">20dp</dimen>
-
-    <dimen name="activity_logo_vertical_margin">30dp</dimen>
+    <dimen name="activity_logo_vertical_margin">20dp</dimen>
+    <dimen name="activity_login_text_view_margin">15dp</dimen>
 
     <dimen name="activity_main_dashboard_menu_item_txt_margin">15dp</dimen>
 
