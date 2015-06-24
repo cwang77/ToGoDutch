@@ -2,6 +2,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.longnightking.togodutch_android.ui.StatisticActivity">
+
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/action_insert" android:title="@string/option_menu_insert"
+        android:icon="@mipmap/ic_action_new"
+        android:orderInCategory="100" app:showAsAction="always"/>
+
+    <item android:id="@+id/action_clear" android:title="@string/option_menu_clear"
+        android:icon="@mipmap/ic_action_discard"
+        android:orderInCategory="100" app:showAsAction="always"/>
+
+    <item android:id="@+id/action_check_out" android:title="@string/option_menu_check_out"
+        android:icon="@mipmap/ic_action_accept"
+        android:orderInCategory="100" app:showAsAction="ifRoom"/>
 </menu>

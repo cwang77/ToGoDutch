@@ -10,6 +10,14 @@
 
     <dimen name="activity_main_dashboard_menu_item_txt_margin">15dp</dimen>
 
+    <dimen name="umano_panel_height">68dp</dimen>
+    <dimen name="umano_shadow_height">2dp</dimen>
+    <dimen name="umano_paralax_offset">100dp</dimen>
+    <dimen name="drag_view_title_txt_size">20sp</dimen>
+    <dimen name="devider_width">1dp</dimen>
+    <dimen name="drag_view_action_item_txt_size">18sp</dimen>
+    <dimen name="drag_view_action_item_margin">13dp</dimen>
+    <dimen name="drag_view_action_item_icon_size">30dp</dimen>
 
     <dimen name="table_column_width">90dp</dimen>
     <dimen name="table_cell_height_double">64dp</dimen>

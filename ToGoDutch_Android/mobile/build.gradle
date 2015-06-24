@@ -28,4 +28,5 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.1.0'
     compile files('libs/Parse-1.9.1.jar')
     compile files('libs/ParseFacebookUtilsV4-1.9.1.jar')
+    compile project(':SlidingUpPanelLibrary')
 }

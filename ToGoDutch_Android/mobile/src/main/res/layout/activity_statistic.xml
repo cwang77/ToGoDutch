@@ -1,46 +1,87 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.longnightking.togodutch_android.ui.StatisticActivity">
 
-    <FrameLayout
-        android:id="@+id/tableContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sliding_panel_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        sothree:umanoPanelHeight="@dimen/umano_panel_height"
+        sothree:umanoShadowHeight="@dimen/umano_shadow_height"
+        sothree:umanoParalaxOffset="@dimen/umano_paralax_offset"
+        sothree:umanoDragView="@+id/dragView">
 
-    </FrameLayout>
+        <!-- MAIN CONTENT -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+            <FrameLayout
+                android:id="@+id/tableContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+            </FrameLayout>
+        </RelativeLayout>
 
-    <Button
-        android:id="@+id/row_plus_btn"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/row_plus_btn_txt">
-    </Button>
+        <!-- SLIDING LAYOUT -->
+        <LinearLayout
+            android:id="@+id/dragView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/sliding_panel_drag_view_bg_color"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="false">
 
-    <Button
-        android:id="@+id/col_plus_btn"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/col_plus_btn_txt"
-        android:layout_toEndOf="@+id/row_plus_btn">
-    </Button>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/umano_panel_height"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/option_menu_insert"
+                    android:textSize="@dimen/drag_view_title_txt_size"/>
+                <View
+                    android:layout_height="@dimen/devider_width"
+                    android:layout_width="match_parent"
+                    android:background="@color/divider_color" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <include
+                        android:id="@+id/inser_row_btn"
+                        layout="@layout/widget_drag_view_action_item"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:layout_alignParentStart="true" />
+                    <include
+                        android:id="@+id/inser_column_btn"
+                        layout="@layout/widget_drag_view_action_item"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:layout_alignParentEnd="true" />
+                </LinearLayout>
 
-    <Button
-        android:id="@+id/calculate_btn"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="@string/calculation_btn_txt"
-        android:layout_toEndOf="@+id/col_plus_btn">
-    </Button>
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/calculateResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"/>
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:scaleType="fitStart"
+                android:src="@mipmap/ic_action_new" >
+            </ImageView>
+        </LinearLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </RelativeLayout>

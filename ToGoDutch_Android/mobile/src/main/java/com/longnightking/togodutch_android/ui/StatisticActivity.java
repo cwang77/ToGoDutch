@@ -1,5 +1,6 @@
 package com.longnightking.togodutch_android.ui;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.longnightking.togodutch_android.R;
 import com.longnightking.togodutch_android.statistic.Contact;
 import com.longnightking.togodutch_android.statistic.Purchase;
 import com.longnightking.togodutch_android.widgets.TableView;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,13 +28,11 @@ import java.util.List;
 
 public class StatisticActivity extends Activity {
 
-    private Button rowPlusBtn, colPlusBtn, calculateBtn;
+    private SlidingUpPanelLayout mSlidingPanel;
 
     private TableView mTable;
 
     private FrameLayout tableContainer;
-
-    private TextView result;
 
     private HashMap<Integer, Boolean> statisticMap;
 
@@ -57,21 +57,22 @@ public class StatisticActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_statistic, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if(id == R.id.action_insert) {
+            mSlidingPanel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        } else if(id == R.id.action_clear){
+
+        }else if(id == R.id.action_check_out){
+            calculateDutch();
         }
 
         return super.onOptionsItemSelected(item);
@@ -82,33 +83,10 @@ public class StatisticActivity extends Activity {
         mTable = new TableView(this, ids, initRowNum, initColNum, mCheckBoxChangeListener);
         tableContainer = (FrameLayout)findViewById(R.id.tableContainer);
         tableContainer.addView(mTable);
-
-        rowPlusBtn = (Button)findViewById(R.id.row_plus_btn);
-        colPlusBtn = (Button)findViewById(R.id.col_plus_btn);
-        calculateBtn = (Button)findViewById(R.id.calculate_btn);
-        rowPlusBtn.setOnClickListener(mButtonClickListener);
-        colPlusBtn.setOnClickListener(mButtonClickListener);
-        calculateBtn.setOnClickListener(mButtonClickListener);
-
-        result = (TextView)findViewById(R.id.calculateResult);
+        mSlidingPanel = (SlidingUpPanelLayout)findViewById(R.id.sliding_panel_container);
+        mSlidingPanel.setPanelSlideListener(mPanelSlideListener);
+        mSlidingPanel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
     }
-
-    private View.OnClickListener mButtonClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch(v.getId()){
-                case R.id.row_plus_btn:
-                    mTable.addRow();
-                    break;
-                case R.id.col_plus_btn:
-                    mTable.addColumn();
-                    break;
-                case R.id.calculate_btn:
-                    calculateDutch();
-                default: break;
-            }
-        }
-    };
 
     private void calculateDutch(){
         List<Contact> mContactList = new ArrayList<Contact>();
@@ -139,7 +117,7 @@ public class StatisticActivity extends Activity {
             String resultTxt = "";
             for(int i = 0; i < rNum; i++)
                 resultTxt += "Name: " + mContactList.get(i).getContactName() + ", Pay: " + mContactList.get(i).getPayment() + "\n";
-            result.setText(resultTxt);
+            Toast.makeText(this, resultTxt, Toast.LENGTH_LONG).show();
         }
 
     }
@@ -167,6 +145,42 @@ public class StatisticActivity extends Activity {
             }
             else
                 Log.i(TAG, "checkbox not exist, mId: " + mId);
+        }
+    };
+
+    private SlidingUpPanelLayout.PanelSlideListener mPanelSlideListener = new SlidingUpPanelLayout.PanelSlideListener() {
+        @Override
+        public void onPanelSlide(View panel, float slideOffset) {
+            Log.i(TAG, "onPanelSlide, offset " + slideOffset);
+        }
+
+        @Override
+        public void onPanelExpanded(View panel) {
+            Log.i(TAG, "onPanelExpanded");
+
+        }
+
+        @Override
+        public void onPanelCollapsed(View panel) {
+            Log.i(TAG, "onPanelCollapsed");
+
+        }
+
+        @Override
+        public void onPanelAnchored(View panel) {
+            Log.i(TAG, "onPanelAnchored");
+        }
+
+        @Override
+        public void onPanelHidden(View panel) {
+            Log.i(TAG, "onPanelHidden");
+        }
+    };
+
+    private View.OnClickListener actionItemOnClickListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View v){
+
         }
     };
 }

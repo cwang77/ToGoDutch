@@ -20,7 +20,16 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        new LoginRequireCheck().execute();
+//        new LoginRequireCheck().execute();
+        final Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                startActivity(intent);
+                finish();
+            }
+        }, 500);
     }
 
     private class LoginRequireCheck extends AsyncTask<Void, Void, Void> {

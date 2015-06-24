@@ -1,1 +1,1 @@
-include ':mobile', ':wear', 'FacebookSDK', ':facebook'
+include ':mobile', ':wear', ':facebook', ':SlidingUpPanelLibrary'
