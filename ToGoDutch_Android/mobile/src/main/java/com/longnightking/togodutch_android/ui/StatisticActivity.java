@@ -30,6 +30,8 @@ public class StatisticActivity extends Activity {
 
     private SlidingUpPanelLayout mSlidingPanel;
 
+    private View insertRowBtn, insertColumnBtn;
+
     private TableView mTable;
 
     private FrameLayout tableContainer;
@@ -78,14 +80,28 @@ public class StatisticActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mSlidingPanel != null && mSlidingPanel.getPanelState() !=SlidingUpPanelLayout.PanelState.HIDDEN){
+                mSlidingPanel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void bindViews(int initRowNum, int initColNum){
         TableView.TableInitResIds ids = new TableView.TableInitResIds();
         mTable = new TableView(this, ids, initRowNum, initColNum, mCheckBoxChangeListener);
         tableContainer = (FrameLayout)findViewById(R.id.tableContainer);
         tableContainer.addView(mTable);
+
         mSlidingPanel = (SlidingUpPanelLayout)findViewById(R.id.sliding_panel_container);
         mSlidingPanel.setPanelSlideListener(mPanelSlideListener);
         mSlidingPanel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+        insertRowBtn = findViewById(R.id.insert_row_btn);
+        insertColumnBtn = findViewById(R.id.insert_column_btn);
+        insertRowBtn.setOnClickListener(actionItemOnClickListener);
+        insertColumnBtn.setOnClickListener(actionItemOnClickListener);
     }
 
     private void calculateDutch(){
@@ -97,12 +113,11 @@ public class StatisticActivity extends Activity {
             int cNum = mPurchaseList.size();
             int rNum = mContactList.size();
             for(int c = 0; c < cNum; c++){
-                int sharedContactsCount = contactsInPurchaseMap.get(c);
-                if(sharedContactsCount <= 0)
-                {
-                    Toast.makeText(StatisticActivity.this, "No one paid for purchase NO." + c + ".", Toast.LENGTH_SHORT).show();
+                if(mTable.getPurchaseTakenTimes(c) <= 0){
+                    Toast.makeText(StatisticActivity.this, "No one paid for purchase NO." + (c+1) + ".", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                int sharedContactsCount = contactsInPurchaseMap.get(c);
                 double allocatedCost = mPurchaseList.get(c).getConsumption() / sharedContactsCount;
                 for(int r = 0; r < rNum; r++){
                     int hashKey = r * 10 + c;
@@ -140,6 +155,7 @@ public class StatisticActivity extends Activity {
                     contactsInPurchaseMap.put(mCol, contactsInPurchaseMap.get(mCol) - 1);
                     checkedTxt = "false";
                 }
+                mTable.markPurchaseHasBeenTaken(mCol, isChecked);
                 statisticMap.put(mId, isChecked);
                 Log.i(TAG, "Checked: " + checkedTxt + ", Row: " + mRow + ", Col: " + mCol);
             }
@@ -180,7 +196,12 @@ public class StatisticActivity extends Activity {
     private View.OnClickListener actionItemOnClickListener = new View.OnClickListener(){
         @Override
         public void onClick(View v){
-
+            if(v.getId() == R.id.insert_column_btn) {
+                mTable.addColumn();
+            } else if(v.getId() == R.id.insert_row_btn) {
+                mTable.addRow();
+            }
+            mSlidingPanel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
         }
     };
 }

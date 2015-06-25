@@ -46,6 +46,8 @@ public class TableView extends RelativeLayout {
 
     private CheckBox.OnCheckedChangeListener onCheckedChangeListener;
 
+    private List<Integer> purchaseTakenTimes;
+
     public TableView(Context context, TableInitResIds Ids, int rNum, int cNum, CheckBox.OnCheckedChangeListener listener){
         super(context);
         init(context, Ids, rNum, cNum, listener);
@@ -66,6 +68,8 @@ public class TableView extends RelativeLayout {
         onCheckedChangeListener = listener;
         inflate(mContext, R.layout.widget_tableview, this);
         bindViews(r, c);
+        purchaseTakenTimes = new ArrayList<Integer>();
+        purchaseTakenTimes.add(0);
     }
 
     private void bindViews(int r, int c){
@@ -151,6 +155,7 @@ public class TableView extends RelativeLayout {
             colorFlag = !colorFlag;
         }
         colNum++;
+        purchaseTakenTimes.add(0);
     }
 
     public boolean getStatsDataFromUI(List<Contact> contactList, List<Purchase> purchaseList){
@@ -193,6 +198,18 @@ public class TableView extends RelativeLayout {
         mCheckBox.setOnCheckedChangeListener(onCheckedChangeListener);
         mCheckBox.setId(id);
         return mCheckBox;
+    }
+
+    public void markPurchaseHasBeenTaken(int index, boolean isChecked){
+        if(isChecked) {
+            purchaseTakenTimes.set(index, purchaseTakenTimes.get(index) + 1);
+        } else {
+            purchaseTakenTimes.set(index, purchaseTakenTimes.get(index) - 1);
+        }
+    }
+
+    public int getPurchaseTakenTimes(int index){
+        return purchaseTakenTimes.get(index);
     }
 
     private OnScrollListener mOnScrollListener = new OnScrollListener(){

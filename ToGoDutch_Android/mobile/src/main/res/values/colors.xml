@@ -10,6 +10,10 @@
     <color name="dashboard_nav_item_unfinished_bg_color">#2c3e50</color>
     <color name="dashboard_nav_item_quick_avg_bg_color">#7f8c8d</color>
 
+    <color name="table_delete_view_bg_color">#E84319</color>
+    <color name="table_delete_view_txt_color">#fafafa</color>
+
     <color name="sliding_panel_drag_view_bg_color">#26000000</color>
     <color name="divider_color">#cecece</color>
+    <color name="ripple_color">#33000000</color>
 </resources>

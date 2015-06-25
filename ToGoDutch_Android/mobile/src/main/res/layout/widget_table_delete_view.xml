@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="@string/remove_entire_subject"
+    android:textColor="@color/table_delete_view_txt_color"
+    android:textSize="@dimen/general_txt_size"
+    android:background="@color/table_delete_view_bg_color"
+    android:gravity="center"/>
+
