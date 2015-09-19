@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.longnightking.togodutch_android.ui.StatisticActivity">
 
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_save" android:title="@string/option_menu_save"
+        android:icon="@mipmap/ic_action_save"
+        android:orderInCategory="3" android:showAsAction="always" />
 
     <item android:id="@+id/action_insert" android:title="@string/option_menu_insert"
         android:icon="@mipmap/ic_action_new"
@@ -16,5 +17,5 @@
 
     <item android:id="@+id/action_check_out" android:title="@string/option_menu_check_out"
         android:icon="@mipmap/ic_action_accept"
-        android:orderInCategory="3" android:showAsAction="always"/>
+        android:orderInCategory="4" android:showAsAction="always"/>
 </menu>

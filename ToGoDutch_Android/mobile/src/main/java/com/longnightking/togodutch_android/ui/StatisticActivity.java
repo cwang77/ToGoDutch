@@ -16,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.longnightking.togodutch_android.R;
+import com.longnightking.togodutch_android.interfaces.OnDialogSelectionListener;
 import com.longnightking.togodutch_android.statistic.Contact;
 import com.longnightking.togodutch_android.statistic.Purchase;
+import com.longnightking.togodutch_android.utils.Helper;
 import com.longnightking.togodutch_android.widgets.TableView;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -67,12 +69,12 @@ public class StatisticActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_save) {
             return true;
         } else if(id == R.id.action_insert) {
             mSlidingPanel.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         } else if(id == R.id.action_clear){
-
+            Helper.showOkOrCancelPopupDialog(this,"All the editted infomation will be clear", "Confirm Clear", clearConfimrDialogListener);
         }else if(id == R.id.action_check_out){
             calculateDutch();
         }
@@ -202,6 +204,17 @@ public class StatisticActivity extends Activity {
                 mTable.addRow();
             }
             mSlidingPanel.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+        }
+    };
+
+    private OnDialogSelectionListener clearConfimrDialogListener = new OnDialogSelectionListener(){
+        @Override
+        public void onPositiveSelected(){
+            //clear data
+        }
+        @Override
+        public void onNegativeSelected(){
+            //do nothing
         }
     };
 }

@@ -23,6 +23,7 @@
     <string name="option_menu_clear">CLear</string>
     <string name="option_menu_share">Share</string>
     <string name="option_menu_check_out">Check Out</string>
+    <string name="option_menu_save">Save</string>
     <string name="insert_a_row">Add a member</string>
     <string name="insert_a_column">Add a purchase</string>
     <string name="action_settings">Settings</string>
@@ -32,6 +33,9 @@
     <string name="table_edit_hint_purchase">purchase</string>
     <string name="table_edit_hint_payment">$</string>
     <string name="remove_entire_subject">Remove</string>
+
+    <string name="dialog_OK">OK</string>
+    <string name="dialog_Cancel">Cancel</string>
 
     <!-- Strings related to main activity -->
     <string-array name="nav_menu_array">

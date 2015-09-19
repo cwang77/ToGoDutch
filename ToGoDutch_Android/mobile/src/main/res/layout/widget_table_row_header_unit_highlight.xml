@@ -1,4 +1,12 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_column="1"
+    android:hint="@string/table_edit_hint_name"
+    android:layout_height="@dimen/table_cell_height"
+    android:layout_width="@dimen/table_column_width"
+    android:gravity="center"
+    style="@style/TableCellHighlight" />
+
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/table_column_width"
     android:layout_height="@dimen/table_cell_height">
 
@@ -23,4 +31,4 @@
             style="@style/TableCellHighlight" />
     </RelativeLayout>
 
-</FrameLayout>
+</FrameLayout> -->
