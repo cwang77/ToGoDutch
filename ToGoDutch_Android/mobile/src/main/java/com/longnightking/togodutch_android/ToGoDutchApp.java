@@ -11,6 +11,7 @@ public class ToGoDutchApp extends Application {
 
     @Override
     public void onCreate() {
+        super.onCreate();
         Parse.initialize(this, "SNbRK3FPkqp6VWF0W23CUYUsO5L0Nxy74O7gHKGV", "Qpojkp918XJuMlJBS5FAxJ4RihIv1CXQsTjqhBHB");
     }
 }

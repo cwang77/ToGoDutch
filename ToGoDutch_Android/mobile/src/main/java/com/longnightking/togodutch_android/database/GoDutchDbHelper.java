@@ -18,11 +18,14 @@ public class GoDutchDbHelper extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DbTableContacts.SQL_CREATE_TABLE);
+        db.execSQL(GoDutchDbContract.ContactEntry.SQL_CREATE_TABLE);
+        db.execSQL(GoDutchDbContract.PurchaseEntry.SQL_CREATE_TABLE);
+        db.execSQL(GoDutchDbContract.StatisticEntry.SQL_CREATE_TABLE);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DbTableContacts.SQL_DROP_TABLE);
+        //
+        // db.execSQL(DbTableContacts.SQL_DROP_TABLE);
         onCreate(db);
     }
 

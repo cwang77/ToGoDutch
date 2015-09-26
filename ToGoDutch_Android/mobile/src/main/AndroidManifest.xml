@@ -21,19 +21,12 @@
             android:theme="@style/NoActionBarTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:theme="@style/NoActionBarTheme"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
-        <activity
-            android:name=".ui.SignUpActivity"
-            android:label="@string/title_activity_sign_up"
+            android:name=".ui.AuthActivity"
+            android:label="@string/title_activity_auth"
             android:theme="@style/NoActionBarTheme">
         </activity>
         <activity
@@ -42,7 +35,8 @@
         </activity>
         <activity
             android:name=".ui.StatisticActivity"
-            android:label="@string/title_activity_statistic" >
+            android:label="@string/title_activity_statistic"
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:name=".ui.DutchHistoryActivity"
