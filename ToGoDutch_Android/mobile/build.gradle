@@ -29,4 +29,5 @@ dependencies {
     compile files('libs/Parse-1.9.1.jar')
     compile files('libs/ParseFacebookUtilsV4-1.9.1.jar')
     compile project(':SlidingUpPanelLibrary')
+    compile files('libs/commons-validator-1.4.1.jar')
 }

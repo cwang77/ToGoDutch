@@ -22,6 +22,9 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -41,55 +44,43 @@ public class SignUpFragment extends AbstractAuthFragment {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        bindViews(view);
-        return view;
+    protected int getLayoutId(){
+        return R.layout.fragment_sign_up;
     }
 
-    private void bindViews(View rootView){
+    @Override
+    protected void bindViews(View rootView){
         email = (AutoCompleteTextView)rootView.findViewById(R.id.email);
         password = (EditText)rootView.findViewById(R.id.password);
         passwordRepeat = (EditText)rootView.findViewById(R.id.password_repeat);
-        registerBtn = (Button)rootView.findViewById(R.id.register_button);
-        signUpWaiting = (ProgressBar)rootView.findViewById(R.id.signUpWaiting);
-
-        email.setOnFocusChangeListener(mFocusChangeListener);
-        password.setOnFocusChangeListener(mFocusChangeListener);
-        passwordRepeat.setOnFocusChangeListener(mFocusChangeListener);
-
-        registerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                disableInputUI();
-                checkInputValidation();
-                signUpNewUser();
-            }
-        });
+        registerBtn = (Button)rootView.findViewById(R.id.button);
+        signUpWaiting = (ProgressBar)rootView.findViewById(R.id.waitingProgressBar);
+        registerBtn.setText(R.string.register_btn_txt);
+//        email.addTextChangedListener(emailTextWatcher);
+//        passwordRepeat.addTextChangedListener(passwordRepeatWatcher);
+        email.setOnFocusChangeListener(mOnFocusChangeListener);
+        password.setOnFocusChangeListener(mOnFocusChangeListener);
+        passwordRepeat.setOnFocusChangeListener(mOnFocusChangeListener);
     }
 
-    private View.OnFocusChangeListener mFocusChangeListener = new View.OnFocusChangeListener() {
-
-        public void onFocusChange(View v, boolean hasFocus) {
-            if (!hasFocus) {
-                EditText thisEditTxt = (EditText)v;
-                if(thisEditTxt.getText().length() <= 0)
-                    ;
-            }else{
-
-            }
-
+    @Override
+    protected boolean checkInputValidation(){
+        boolean isEmailValid = Helper.isEmailValid(email.getText().toString());
+        String passwordTxt = password.getText().toString();
+        String passwordRepeatTxt = passwordRepeat.getText().toString();
+        boolean isPasswordMatch = !passwordTxt.isEmpty() && !passwordRepeatTxt.isEmpty() && passwordRepeatTxt.equals(passwordTxt);
+        if(!isEmailValid){
+            email.setError(getString(R.string.email_invalid));
         }
-    };
-
-    private boolean checkInputValidation(){
-        return false;
+        if(!isPasswordMatch){
+            passwordRepeat.setError(getString(R.string.password_not_match));
+        }
+        return isEmailValid && isPasswordMatch;
     }
 
-    private void signUpNewUser(){
+    @Override
+    protected void buttonOperation(){
         ParseUser user = new ParseUser();
         user.setUsername(email.getText().toString());
         user.setPassword(passwordRepeat.getText().toString());
@@ -103,42 +94,62 @@ public class SignUpFragment extends AbstractAuthFragment {
                 } else {
                     Helper.log(TAG, "sign up failed");
                     reactiveInputUI();
-                    Helper.handleFailure(e);
+                    Helper.handleFailureForView(e, getActivity(), email, passwordRepeat);
                 }
             }
         });
     }
 
-    private void disableInputUI(){
-        registerBtn.setEnabled(false);
-        email.setEnabled(false);
-        password.setEnabled(false);
-        passwordRepeat.setEnabled(false);
-        signUpWaiting.setVisibility(View.VISIBLE);
+    @Override
+    protected List<EditText> getInputViews(){
+        List<EditText> rtnList = new ArrayList<EditText>();
+        rtnList.add(email);
+        rtnList.add(password);
+        rtnList.add(passwordRepeat);
+        return rtnList;
     }
 
-    private void reactiveInputUI(){
-        registerBtn.setEnabled(true);
-        email.setEnabled(true);
-        password.setEnabled(true);
-        passwordRepeat.setEnabled(true);
-        signUpWaiting.setVisibility(View.GONE);
+    @Override
+    protected View getWaitingProgressBar(){
+        return signUpWaiting;
     }
 
-    private TextWatcher mTextWatcher = new TextWatcher() {
+    @Override
+    protected Button getButton() {
+        return registerBtn;
+    }
+
+/*    private TextWatcher emailTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
         }
-
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-
         }
-
         @Override
         public void afterTextChanged(Editable s) {
-
+            if(Helper.isEmailValid(s.toString())){
+                email.setError(null);
+            }else{
+                email.setError(getString(R.string.email_invalid));
+            }
         }
     };
+
+    private TextWatcher passwordRepeatWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+        @Override
+        public void afterTextChanged(Editable s) {
+            if(s.equals(password.getText())){
+                passwordRepeat.setError(null);
+            }else{
+                passwordRepeat.setError(getString(R.string.password_not_match));
+            }
+        }
+    }; */
 }

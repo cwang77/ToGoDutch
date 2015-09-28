@@ -1,14 +1,9 @@
 package com.longnightking.togodutch_android.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +11,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.longnightking.togodutch_android.R;
-import com.longnightking.togodutch_android.interfaces.AuthFragmentInteractListener;
+import com.longnightking.togodutch_android.utils.Helper;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginFragment extends AbstractAuthFragment {
 
@@ -45,75 +43,88 @@ public class LoginFragment extends AbstractAuthFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        bindViews(view);
-        return view;
+    protected int getLayoutId(){
+        return R.layout.fragment_login;
     }
 
-    private void bindViews(View rootView){
+    @Override
+    protected void bindViews(View rootView){
         forgotPswdTxt = (TextView)rootView.findViewById(R.id.forgotPasswordTxt);
         signUpTxt = (TextView)rootView.findViewById(R.id.signUpTxt);
         emailTxt = (AutoCompleteTextView)rootView.findViewById(R.id.email);
         passwordTxt = (EditText)rootView.findViewById(R.id.password);
-        signInBtn = (Button)rootView.findViewById(R.id.email_sign_in_button);
-        loginWaiting = (ProgressBar)rootView.findViewById(R.id.loginWaiting);
-
+        signInBtn = (Button)rootView.findViewById(R.id.button);
+        loginWaiting = (ProgressBar)rootView.findViewById(R.id.waitingProgressBar);
+        signInBtn.setText(getString(R.string.action_sign_in));
         appendUnderlineForTxtView(forgotPswdTxt);
         appendUnderlineForTxtView(signUpTxt);
 
-        forgotPswdTxt.setOnClickListener(mViewClickListener);
-        signUpTxt.setOnClickListener(mViewClickListener);
-        signInBtn.setOnClickListener(mViewClickListener);
+        emailTxt.setOnFocusChangeListener(mOnFocusChangeListener);
+        passwordTxt.setOnFocusChangeListener(mOnFocusChangeListener);
+
+        forgotPswdTxt.setOnClickListener(redirectClickListener);
+        signUpTxt.setOnClickListener(redirectClickListener);
     }
 
     private void appendUnderlineForTxtView(TextView txtView){
         txtView.setPaintFlags(txtView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 
-    private View.OnClickListener mViewClickListener = new View.OnClickListener(){
+    private View.OnClickListener redirectClickListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            switch(v.getId()){
-                case R.id.forgotPasswordTxt:
-                    break;
-                case R.id.signUpTxt:
-                    fragmentInteractListener.onFragmentInteract(false);
-                    break;
-                case R.id.email_sign_in_button:
-                    disableInputUI();
-                    signUserIn();
-                    break;
-                default: break;
+            if(fragmentInteractListener != null){
+                fragmentInteractListener.onFragmentInteract(v.getId());
+            }else{
+                ((AuthActivity)getActivity()).onFragmentInteract(v.getId());
             }
         }
     };
 
-    private void signUserIn(){
+    @Override
+    protected boolean checkInputValidation(){
+        boolean isEmailValid = Helper.isEmailValid(emailTxt.getText().toString());
+        boolean isPasswordNoEmpty = !passwordTxt.getText().toString().isEmpty();
+        if(!isEmailValid){
+            emailTxt.setError(getString(R.string.email_invalid));
+        }
+        if(!isPasswordNoEmpty){
+            passwordTxt.setError(getString(R.string.password_empty));
+        }
+        return isEmailValid && isPasswordNoEmpty;
+    }
+
+    @Override
+    protected void buttonOperation(){
         ParseUser.logInInBackground(emailTxt.getText().toString(), passwordTxt.getText().toString(), new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
-                    // Hooray! The user is logged in.
+                    Helper.log(TAG, "user login successfully");
+                    Helper.redirectTo(getActivity(), new Intent(getActivity(), MainActivity.class));
                 } else {
+                    Helper.log(TAG, "user login failed");
                     reactiveInputUI();
-                    // Signup failed. Look at the ParseException to see what happened.
+                    Helper.handleFailureForView(e, getActivity(), emailTxt, passwordTxt);
                 }
             }
         });
     }
 
-    private void disableInputUI(){
-        signInBtn.setEnabled(false);
-        emailTxt.setEnabled(false);
-        passwordTxt.setEnabled(false);
-        loginWaiting.setVisibility(View.VISIBLE);
+    @Override
+    protected List<EditText> getInputViews(){
+        List<EditText> rtnList = new ArrayList<EditText>();
+        rtnList.add(emailTxt);
+        rtnList.add(passwordTxt);
+        return rtnList;
     }
 
-    private void reactiveInputUI(){
-        signInBtn.setEnabled(true);
-        emailTxt.setEnabled(true);
-        passwordTxt.setEnabled(true);
-        loginWaiting.setVisibility(View.GONE);
+    @Override
+    protected View getWaitingProgressBar(){
+        return loginWaiting;
+    }
+
+    @Override
+    protected Button getButton() {
+        return signInBtn;
     }
 }

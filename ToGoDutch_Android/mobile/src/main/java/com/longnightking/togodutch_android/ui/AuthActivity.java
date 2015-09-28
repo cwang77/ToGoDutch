@@ -16,13 +16,23 @@ public class AuthActivity extends Activity implements AuthFragmentInteractListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         if(savedInstanceState == null){
-            loadFragment(true, false);
+            loadFragment(-1, false);
         }
     }
 
-    private void loadFragment(boolean isSignIn, boolean isAddToBackStack){
-
-        AbstractAuthFragment fragment = isSignIn ? new LoginFragment() : new SignUpFragment();
+    private void loadFragment(int viewId, boolean isAddToBackStack){
+        AbstractAuthFragment fragment = null;
+        switch (viewId){
+            case R.id.signUpTxt:
+                fragment = new SignUpFragment();
+                break;
+            case R.id.forgotPasswordTxt:
+                fragment = new PasswordForgotFragment();
+                break;
+            default:
+                fragment = new LoginFragment();
+                break;
+        }
         fragment.registerFragmentInteractListener(this);
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
@@ -34,7 +44,7 @@ public class AuthActivity extends Activity implements AuthFragmentInteractListen
     }
 
     @Override
-    public void onFragmentInteract(boolean isSignIn) {
-        loadFragment(isSignIn, !isSignIn);
+    public void onFragmentInteract(int viewId) {
+        loadFragment(viewId, true);
     }
 }

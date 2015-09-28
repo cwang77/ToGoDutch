@@ -19,7 +19,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/activity_logo_vertical_margin"
                 android:background="@mipmap/ic_launcher"/>
 
             <LinearLayout
@@ -28,53 +27,28 @@
                 android:orientation="vertical">
 
                 <AutoCompleteTextView android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress" android:maxLines="1"
-                    android:singleLine="true" />
+                    style="@style/AuthInfoEditStyle"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textEmailAddress" />
 
 
                 <EditText android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/login_account_info_margin"
+                    style="@style/AuthInfoEditStyle"
                     android:hint="@string/prompt_password"
                     android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1" android:singleLine="true" />
+                    android:inputType="textPassword" />
 
                 <EditText android:id="@+id/password_repeat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/login_account_info_margin"
+                    style="@style/AuthInfoEditStyle"
                     android:hint="@string/password_repeat"
                     android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1" android:singleLine="true" />
+                    android:inputType="textPassword" />
 
-                <FrameLayout
+                <include
+                    layout="@layout/widget_auth_operation_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/login_account_info_margin">
-
-                    <Button android:id="@+id/register_button"
-                        style="?android:textAppearanceSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/register_btn_txt"
-                        android:textStyle="bold" />
-
-                    <ProgressBar
-                        android:id="@+id/signUpWaiting"
-                        style="?android:attr/progressBarStyleSmallTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:visibility="gone"/>
-
-                </FrameLayout>
-
-
+                    android:layout_marginTop="@dimen/login_account_info_margin"/>
 
             </LinearLayout>
 

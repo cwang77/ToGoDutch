@@ -18,4 +18,11 @@
         <item name="android:background">@drawable/cell_background_matte</item>
     </style>
 
+    <style name="AuthInfoEditStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_marginTop">@dimen/login_account_info_margin</item>
+    </style>
+
 </resources>

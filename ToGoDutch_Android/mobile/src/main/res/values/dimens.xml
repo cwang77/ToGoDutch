@@ -9,6 +9,7 @@
     <dimen name="login_account_info_margin">20dp</dimen>
     <dimen name="activity_logo_vertical_margin">20dp</dimen>
     <dimen name="activity_login_text_view_margin">15dp</dimen>
+    <dimen name="reset_password_layout_margin">200dp</dimen>
 
     <dimen name="activity_main_dashboard_menu_item_txt_margin">15dp</dimen>
 

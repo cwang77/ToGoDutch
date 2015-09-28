@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.longnightking.togodutch_android.R;
+import com.longnightking.togodutch_android.utils.Helper;
+import com.parse.LogOutCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class MainActivity extends Activity {
 
@@ -62,8 +66,14 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_logout) {
+            ParseUser.logOutInBackground(new LogOutCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Helper.log(TAG, "logout successfully");
+                    Helper.redirectTo(MainActivity.this, new Intent(MainActivity.this, AuthActivity.class));
+                }
+            });
         }
 
         return super.onOptionsItemSelected(item);
